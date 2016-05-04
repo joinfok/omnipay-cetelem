@@ -11,16 +11,12 @@
         "cetelem",
         "purchase"
     ],
-    "homepage": "https://github.com/efesaid/omnipay-cetelem",
+    "homepage": "https://github.com/joinfok/omnipay-cetelem",
     "license": "MIT",
     "authors": [
         {
-            "name": "Said İmamoğlu",
-            "email": "said.imamoglu@biberltd.com"
-        },
-        {
-            "name": "Omnipay Contributors",
-            "homepage": "https://github.com/efesaid/omnipay-cetelem/contributors"
+            "name": "Balazs Varga",
+            "email": "joinfok@gmail.com"
         }
     ],
     "autoload": {
