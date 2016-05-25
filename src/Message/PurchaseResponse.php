@@ -36,7 +36,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getRedirectMethod()
     {
-        return 'POST';
+        return 'GET';
     }
 
     public function getRedirectData()
@@ -45,28 +45,6 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     }
     public function getError(){
         return $this->getMessage();
-    }
-
-
-
-    /**
-     * Validates CTRL variable
-     *
-     * @return boolean
-     *
-     */
-    public function checkCtrl($ctrl=NULL){
-        $requestURL = substr($this->createRequestUriNotGiven(), 0, -38); //the last 38 characters are the CTRL param
-        $hashInput = strlen($requestURL).$requestURL;
-        //optional debug info, no need for live payment
-        /*
-        echo "\n<br />".my_print_r($_SERVER);
-        echo "\n<br />".$requestURL;
-        echo "\n<br />".$this->request->hashCtrl($hashInput);
-        echo "\n<br />".$ctrl;
-        die;
-        */
-        return ($ctrl == $this->request->hashCtrl($hashInput))?true:false;
     }
 
     /**

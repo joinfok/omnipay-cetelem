@@ -120,6 +120,7 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
      */
     public function redirect()
     {
+        exit('REdirect:');
         $this->getRedirectResponse()->send();
         exit;
     }

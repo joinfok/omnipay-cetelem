@@ -10,112 +10,139 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     const API_VERSION = '1.0.0';
 
-    protected $liveEndpoint = 'https://secure.cetelem.hu/order/lu.php';
-    protected $testEndpoint = 'https://secure.cetelem.hu/order/lu.php';
-    protected $iosEndpoint  = 'https://secure.cetelem.hu/ios.php';
-    protected $luEndpoint   = 'https://secure.cetelem.hu/lu.php';
-    protected $aluEndpoint  = 'https://secure.cetelem.hu/alu.php';
-    protected $idnEndpoint  = 'https://secure.cetelem.hu/idn.php';
-    protected $irnEndpoint  = 'https://secure.cetelem.hu/irn.php';
-    protected $ocEndpoint   = 'https://secure.cetelem.hu/tokens';
+    protected $liveEndpoint = 'https://ecom.cetelem.hu';
+    protected $testEndpoint = 'https://ecomdemo.cetelem.hu';
+    protected $soap         = '/ecommerce/EcommerceService?wsdl';
+    protected $validation   = '/cetelem_aruhitel/hitelbiralat';
+    
 
     public function getApiVersion(){
         return 'Netfort-Cetelem-Ver'.(self::API_VERSION);
     }
-    public function getMerchantId()
+    public function getSociety()
     {
-        return $this->getParameter('merchantId');
+        return $this->getParameter('society');
     }
 
-    public function setMerchantId($value)
+    public function setSociety($value)
     {
-        return $this->setParameter('merchantId', $value);
+        return $this->setParameter('society', $value);
+    }
+    public function getShopCode()
+    {
+        return $this->getParameter('shopCode');
     }
 
-    public function getSecretKey()
+    public function setShopCode($value)
     {
-        return $this->getParameter('secretKey');
+        return $this->setParameter('shopCode', $value);
+    }
+    public function getAmount()
+    {
+        return $this->getParameter('amount');
     }
 
-    public function setSecretKey($value)
+    public function setAmount($value)
     {
-        return $this->setParameter('secretKey', $value);
+        return $this->setParameter('amount', $value);
     }
-    public function getMethod()
+    public function setTimeout($value)
     {
-        return $this->getParameter('method');
+        return $this->setParameter('timeout', $value);
     }
-
-    public function setMethod($value)
+    public function getTimeout($value)
     {
-        return $this->setParameter('method', $value);
+        return $this->getParameter('timeout', $value);
     }
-
-    public function getOrderDate()
-    {
-        return $this->getParameter('orderDate');
-    }
-
-    public function setOrderDate($value)
-    {
-        return $this->setParameter('orderDate', $value);
-    }
-    public function getBackRef()
-    {
-        return $this->getParameter('backRef');
-    }
-
-    public function setBackRef($value)
-    {
-        return $this->setParameter('backRef', $value);
-    }
-    public function getTimeoutUrl()
-    {
-        return $this->getParameter('timeoutUrl');
-    }
-
     public function setTimeoutUrl($value)
     {
         return $this->setParameter('timeoutUrl', $value);
     }
-    public function getLanguage()
+    public function getTimeoutUrl($value)
     {
-        return $this->getParameter('language');
+        return $this->getParameter('timeoutUrl', $value);
+    }
+    public function setRedirectUrl($value)
+    {
+        return $this->setParameter('redirectUrl', $value);
+    }
+    public function getRedirectUrl($value)
+    {
+        return $this->getParameter('redirectUrl', $value);
+    }
+    public function setMainUrl($value)
+    {
+        return $this->setParameter('mainUrl', $value);
+    }
+    public function getMaintUrl($value)
+    {
+        return $this->getParameter('mainUrl', $value);
+    }
+    public function setDeniedUrl($value)
+    {
+        return $this->setParameter('deniedUrl', $value);
+    }
+    public function getDeniedUrl($value)
+    {
+        return $this->getParameter('deniedUrl', $value);
+    }
+    public function setAcceptedUrl($value)
+    {
+        return $this->setParameter('acceptedUrl', $value);
+    }
+    public function getAcceptedUrl($value)
+    {
+        return $this->getParameter('acceptedUrl', $value);
+    }
+    public function setWaitingUrl($value)
+    {
+        return $this->setParameter('waitingUrl', $value);
+    }
+    public function getWaitingUrl($value)
+    {
+        return $this->getParameter('waitingUrl', $value);
+    }
+    public function getBaremId()
+    {
+        return $this->getParameter('baremId');
     }
 
-    public function setLanguage($value)
+    public function setBaremId($value)
     {
-        return $this->setParameter('language', $value);
+        return $this->setParameter('baremId', $value);
     }
-    public function getAutomode()
+    public function getArticleId()
     {
-        return $this->getParameter('automode');
-    }
-
-    public function setAutomode($value)
-    {
-        return $this->setParameter('automode', $value);
+        return $this->getParameter('articleId');
     }
 
-    public function setDiscount($value)
+    public function setArticleId($value)
     {
-        return $this->setParameter('discount', $value);
+        return $this->setParameter('articleId', $value);
     }
-    public function getDiscount()
+    public function getCustomerKey()
     {
-        return $this->getParameter('discount');
-    }
-
-
-    public function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+        return $this->getParameter('customerKey');
     }
 
+    public function getEndpoint($wsdl = FALSE)
+    {
+        return ($this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint).$this->getApiPoint($wsdl);
+    }
+
+    public function getApiPoint($wsdl = FALSE)
+    {
+        return $wsdl ? $this->soap : $this->validation;
+    }
+    public function getData(){
+        return $this->data;
+    }
     public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $data, $this->getEndpoint());
+        //return $this->response = new PurchaseResponse($this, $data, $this->getEndpoint());
     }
-
-    public function checkCtrl(){}
+    protected function createResponse($data)
+    {
+        return $this->response = new Response($this, $data);
+    }
 }
